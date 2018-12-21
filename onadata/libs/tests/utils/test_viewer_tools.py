@@ -12,7 +12,8 @@ from onadata.apps.main.tests.test_base import TestBase
 from onadata.libs.utils.viewer_tools import (export_def_from_filename,
                                              generate_enketo_form_defaults,
                                              get_client_ip, get_form,
-                                             get_form_url)
+                                             get_form_url,
+                                             get_submission_url)
 
 
 class TestViewerTools(TestBase):
@@ -164,3 +165,11 @@ class TestViewerTools(TestBase):
         # with form pk url http://ona.io/bob/1
         url = get_form_url(request, username='bob', xform_pk=1)
         self.assertEqual(url, 'https://ona.io/bob/1')
+
+    def test_get_submissions_url(self):
+
+        request = RequestFactory().get('/')
+
+        __import__('ipdb').set_trace()
+        url = get_submission_url(request)
+        self.assertEqual(url, "https://enketo-stage.ona.io/single/::XZqoZ94y")
