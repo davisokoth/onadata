@@ -166,10 +166,12 @@ class TestViewerTools(TestBase):
         url = get_form_url(request, username='bob', xform_pk=1)
         self.assertEqual(url, 'https://ona.io/bob/1')
 
+    @override_settings(TESTING_MODE=False)
     def test_get_submissions_url(self):
-
+        """Test get_submissions_url()."""
         request = RequestFactory().get('/')
-
+        url = get_submission_url(
+            request, username="milly", id_string="tag_team")
         __import__('ipdb').set_trace()
-        url = get_submission_url(request)
-        self.assertEqual(url, "https://enketo-stage.ona.io/single/::XZqoZ94y")
+        self.assertEqual(
+            url, None)
