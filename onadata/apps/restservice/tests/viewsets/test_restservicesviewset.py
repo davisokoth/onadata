@@ -259,7 +259,7 @@ class TestRestServicesViewSet(TestAbstractViewSet):
         self._make_submissions()
 
         self.assertTrue(mock_http.called)
-        self.assertEquals(mock_http.call_count, 4)
+        self.assertEquals(mock_http.call_count, len(self.surveys))
 
     @override_settings(CELERY_TASK_ALWAYS_EAGER=True)
     @patch('requests.post')
