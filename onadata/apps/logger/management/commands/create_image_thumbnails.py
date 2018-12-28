@@ -67,11 +67,15 @@ class Command(BaseCommand):
             if not default_storage.exists(full_path):
                 try:
                     if default_storage.__class__ != fs.__class__:
-                        resize(filename,
-                               att.extension if att.extension != "non" else settings.DEFAULT_IMG_FILE_TYPE)
+                        resize(
+                            filename, att.extension if
+                            att.extension != "non" else
+                            settings.DEFAULT_IMG_FILE_TYPE)
                     else:
-                        resize_local_env(filename,
-                                         att.extension if att.extension != "non" else settings.DEFAULT_IMG_FILE_TYPE)
+                        resize_local_env(
+                            filename, att.extension if
+                            att.extension != "non" else
+                            settings.DEFAULT_IMG_FILE_TYPE)
                     path = get_path(
                         filename, '%s' % THUMB_CONF['small']['suffix'])
                     if default_storage.exists(path):

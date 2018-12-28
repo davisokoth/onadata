@@ -102,11 +102,15 @@ def image_url(attachment, suffix):
                         get_path(filename, size))
                 else:
                     if default_storage.__class__ != fs.__class__:
-                        resize(filename,
-                               attachment.extension if attachment.extension != "non" else settings.DEFAULT_IMG_FILE_TYPE)
+                        resize(
+                            filename, attachment.extension if
+                            attachment.extension != "non" else
+                            settings.DEFAULT_IMG_FILE_TYPE)
                     else:
-                        resize_local_env(filename,
-                                         attachment.extension if attachment.extension != "non" else settings.DEFAULT_IMG_FILE_TYPE)
+                        resize_local_env(
+                            filename, attachment.extension if
+                            attachment.extension != "non" else
+                            settings.DEFAULT_IMG_FILE_TYPE)
 
                     return image_url(attachment, suffix)
             else:
