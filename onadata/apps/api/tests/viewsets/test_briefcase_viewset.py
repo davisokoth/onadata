@@ -1,23 +1,23 @@
+import codecs
 import os
 import shutil
-import codecs
-import mock
 
-from django.utils import timezone
-from django.core.urlresolvers import reverse
+import mock
 from django.core.files.storage import get_storage_class
+from django.core.urlresolvers import reverse
+from django.utils import timezone
 from django_digest.test import DigestAuth
 from rest_framework.test import APIRequestFactory
 
 from onadata.apps.api.tests.viewsets import test_abstract_viewset
 from onadata.apps.api.viewsets.briefcase_viewset import BriefcaseViewset
-from onadata.apps.api.viewsets.xform_submission_viewset import\
+from onadata.apps.api.viewsets.xform_submission_viewset import \
     XFormSubmissionViewSet
+from onadata.apps.api.viewsets.xform_viewset import XFormViewSet
 from onadata.apps.logger.models import Instance
 from onadata.apps.logger.models import XForm
-from onadata.apps.api.viewsets.xform_viewset import XFormViewSet
 
-NUM_INSTANCES = 4
+NUM_INSTANCES = 5
 storage = get_storage_class()()
 
 
@@ -139,7 +139,7 @@ class TestBriefcaseViewSet(test_abstract_viewset.TestAbstractViewSet):
         self.assertEqual(response.status_code, 200)
         submission_list_path = os.path.join(
             self.main_directory, 'fixtures', 'transportation',
-            'view', 'submissionList-4.xml')
+            'view', 'submissionList-5.xml')
         instances = ordered_instances(self.xform)
 
         self.assertEqual(instances.count(), NUM_INSTANCES - 1)
@@ -208,7 +208,7 @@ class TestBriefcaseViewSet(test_abstract_viewset.TestAbstractViewSet):
 
         last_index = instances[:2][1].pk
         last_expected_submission_list = ""
-        for index in range(1, 5):
+        for index in range(1, 6):
             auth = DigestAuth(self.login_username, self.login_password)
             request = self.factory.get(
                 self._submission_list_url,
@@ -221,7 +221,7 @@ class TestBriefcaseViewSet(test_abstract_viewset.TestAbstractViewSet):
             if index > 2:
                 last_index = get_last_index(self.xform, last_index)
             filename = 'submissionList-%s.xml' % index
-            if index == 4:
+            if index == 5:
                 self.assertContains(response, last_expected_submission_list)
                 continue
             # set cursor for second request

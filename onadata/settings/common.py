@@ -426,6 +426,7 @@ THUMB_CONF = {
 }
 # order of thumbnails from largest to smallest
 THUMB_ORDER = ['large', 'medium', 'small']
+DEFAULT_IMG_FILE_TYPE = 'jpg'
 
 # celery
 CELERY_RESULT_BACKEND = 'django-db'

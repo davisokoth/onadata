@@ -4142,8 +4142,10 @@ class TestXFormViewSet(TestAbstractViewSet):
         self.assertIn("form_versions", response.data)
         self.assertEqual(response.data['form_versions'][0].get('total'), 4)
 
+        version = response.data['form_versions'][0].get('version')
+
         # soft delete an instance
-        instance = self.xform.instances.last()
+        instance = self.xform.instances.filter(version=version).last()
         instance.set_deleted()
 
         # delete cache
