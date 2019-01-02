@@ -5,12 +5,10 @@ import csv
 import os
 import re
 import socket
-from builtins import open
-from future.moves.urllib.error import URLError
-from future.moves.urllib.request import urlopen
 from io import StringIO
 from tempfile import NamedTemporaryFile
 
+from builtins import open
 from django.conf import settings
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
@@ -18,9 +16,10 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.test import RequestFactory, TransactionTestCase
 from django.test.client import Client
 from django.utils import timezone
-
 from django_digest.test import Client as DigestClient
 from django_digest.test import DigestAuth
+from future.moves.urllib.error import URLError
+from future.moves.urllib.request import urlopen
 from pyxform.tests_v1.pyxform_test_case import PyxformMarkdown
 from rest_framework.test import APIRequestFactory
 
@@ -39,7 +38,8 @@ class TestBase(PyxformMarkdown, TransactionTestCase):
     surveys = ['transport_2011-07-25_19-05-49',
                'transport_2011-07-25_19-05-36',
                'transport_2011-07-25_19-06-01',
-               'transport_2011-07-25_19-06-14']
+               'transport_2011-07-25_19-06-14',
+               'transport_2011-07-25_19-05-49_1']
     this_directory = os.path.abspath(os.path.dirname(__file__))
 
     def setUp(self):

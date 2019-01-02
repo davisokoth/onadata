@@ -2,21 +2,21 @@ import os
 import shutil
 from io import open
 
-from django.core.urlresolvers import reverse
+from django.contrib.auth import authenticate
 from django.core.files.storage import get_storage_class
+from django.core.urlresolvers import reverse
 from django_digest.test import DigestAuth
 from rest_framework.test import APIRequestFactory
-from django.contrib.auth import authenticate
 
-from onadata.apps.main.tests.test_base import TestBase
-from onadata.apps.logger.views import view_submission_list
-from onadata.apps.logger.views import view_download_submission
-from onadata.apps.logger.views import form_upload
 from onadata.apps.logger.models import Instance
 from onadata.apps.logger.models import XForm
+from onadata.apps.logger.views import form_upload
 from onadata.apps.logger.views import submission
+from onadata.apps.logger.views import view_download_submission
+from onadata.apps.logger.views import view_submission_list
+from onadata.apps.main.tests.test_base import TestBase
 
-NUM_INSTANCES = 4
+NUM_INSTANCES = 5
 storage = get_storage_class()()
 
 
@@ -86,7 +86,7 @@ class TestBriefcaseAPI(TestBase):
         self.assertEqual(response.status_code, 200)
         submission_list_path = os.path.join(
             self.this_directory, 'fixtures', 'transportation',
-            'view', 'submissionList-4.xml')
+            'view', 'submissionList-5.xml')
         instances = ordered_instances(self.xform)
 
         self.assertEqual(instances.count(), NUM_INSTANCES - 1)
@@ -145,7 +145,7 @@ class TestBriefcaseAPI(TestBase):
 
         last_index = instances[:2][1].pk
         last_expected_submission_list = ""
-        for index in range(1, 5):
+        for index in range(1, 6):
             request = self.factory.get(self._submission_list_url, params)
             response = view_submission_list(request, self.user.username)
             self.assertEqual(response.status_code, 401)
@@ -158,7 +158,7 @@ class TestBriefcaseAPI(TestBase):
                 last_index = get_last_index(self.xform, last_index)
             filename = 'submissionList-%s.xml' % index
 
-            if index == 4:
+            if index == 5:
                 self.assertEqual(response.content.decode('utf-8'),
                                  last_expected_submission_list)
                 continue
